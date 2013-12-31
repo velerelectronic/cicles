@@ -1,3 +1,15 @@
+Date.prototype.addDays = function(days) {
+	this.setDate(this.getDate()+days);
+}
+
+Date.prototype.addMonths = function(months) {
+	this.setMonth(this.getMonth()+months);
+}
+
+Date.prototype.addYears = function(years) {
+	this.setFullYear(this.getFullYear()+years);
+}
+
 Date.prototype.isEqualTo = function(day,month,year) {
 	if ((day==this.getDate()) && (month==this.getMonth()) && (year==this.getFullYear())) {
 		return true;
@@ -6,14 +18,23 @@ Date.prototype.isEqualTo = function(day,month,year) {
 	}
 }
 
+Date.prototype.isEqualToDate = function(date) {
+	return this.isEqualTo(date.getDate(),date.getMonth(),date.getFullYear());
+}
+
+
 Date.prototype.getWeekDayFromMonday = function() {
 	return (this.getDay() + 6) % 7;
 }
 
 
-function Calendari() {
+function Calendari(parentNode) {
 	var noms_dies = Array('dilluns','dimarts','dimecres','dijous','divendres','dissabte','diumenge');
 	var noms_mesos = Array('gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre');
+	// Today
+	var date = new Date();
+	var baseNode = document.createElement('div');
+	parentNode.appendChild(baseNode);
 
 	function setHiddenInfo(node,key,value) {
 		node.setAttribute('data-'+key,value);
@@ -21,6 +42,31 @@ function Calendari() {
 
 	function getHiddenInfo(node,key) {
 		return node.getAttribute('data-'+key);
+	};
+
+	function mesEnrere (event) {
+		date.addMonths(-1);
+		generaMesActual();
+	};
+
+	function mesEnvant (event) {
+		date.addMonths(1);
+		generaMesActual();
+	};
+
+	function anyEnrere (event) {
+		date.addYears(-1);
+		generaMesActual();
+	};
+
+	function anyEnvant (event) {
+		date.addYears(1);
+		generaMesActual();
+	};
+
+	function seleccionaDiaAvui (event) {
+		date = new Date();
+		generaMesActual();
 	};
 
 	function generaDia(node,contents) {
@@ -33,24 +79,37 @@ function Calendari() {
 		var node = e.currentTarget;
 		var novadata = new Date();
 		novadata.setTime(getHiddenInfo(node,'date'));
-		novadata.setDate(novadata.getDate()+28);
+		novadata.addDays(28);
 		var d = novadata.getWeekDayFromMonday();
 		var m = novadata.getMonth();
 		var y = novadata.getFullYear();
 		alert('Es preveu regla per al proper ' + noms_dies[d] + ' ' + novadata.getDate() + ' de ' + noms_mesos[m] + ' de ' + y);
 	};
 
-	this.generaMesActual = function(base) {
-		var today = new Date();
-		var year = today.getFullYear();
-		var date = new Date(), y = date.getFullYear(), m = date.getMonth(), d = date.getDate();
+	this.generaCalendari = function() {
+		generaMesActual(this.date);
+	}
+
+	function generaMesActual () {
+		baseNode.innerHTML = '';
+		var y = date.getFullYear(), m = date.getMonth(), d = date.getDate();
 		var heading = document.createElement('h2');
-		base.appendChild(heading);
+		baseNode.appendChild(heading);
 		heading.appendChild( document.createTextNode(noms_mesos[m] + ' ' + y) );
 
 		var taula = document.createElement('table');
 		taula.className = 'calendari';
-		base.appendChild(taula);
+		baseNode.appendChild(taula);
+		var button = document.createElement('button');
+		button.appendChild( document.createTextNode('Avui') );
+		baseNode.appendChild(button);
+		button.onclick = seleccionaDiaAvui;
+
+		var hammer = Hammer(taula);
+		hammer.on('swipedown dragdown',mesEnrere);
+		hammer.on('swipeup dragup',mesEnvant);
+		hammer.on('swiperight dragright',anyEnrere);
+		hammer.on('swipeleft dragleft',anyEnvant);
 
 		var row = document.createElement('tr');
 		taula.appendChild(row);
@@ -62,16 +121,15 @@ function Calendari() {
 		generaDia(row,'Ds');
 		generaDia(row,'Dg');
 
-		var firstDay = new Date(y, m, 2);
+		var firstDay = new Date(y, m, 1);
 		var diasetmana = firstDay.getWeekDayFromMonday();
-		firstDay.setDate( firstDay.getDate() - ((diasetmana>0)?diasetmana:7) );
+		firstDay.addDays(- ((diasetmana>0)?diasetmana:7) );
 
 		var lastDay = new Date(y, m + 1, 0);
 
 		row = document.createElement('tr');
 		taula.appendChild(row);
 
-		var setmana = 1;
 		// 42 dies: 6 setmanes
 		for (var setmana=0; setmana<6; setmana++) {
 			row = document.createElement('tr');
@@ -80,14 +138,16 @@ function Calendari() {
 				var month = firstDay.getMonth();
 				var td = document.createElement('td');
 				setHiddenInfo(td,'date',firstDay.getTime());
-				td.onclick = showNextPeriod;
+				var ham = Hammer(td);
+				ham.on('tap', showNextPeriod);
 				if (month==m) {
 					td.className = 'mesactual';
-					if (firstDay.isEqualTo(d,m,y)) {
-						td.className = 'avui';
-					}
 				} else {
 					td.className = 'mesdistint';
+				}
+				// Is it today?
+				if (firstDay.isEqualToDate(new Date())) {
+					td.className = 'avui';
 				}
 				row.appendChild(td);
 				var day = firstDay.getDate();

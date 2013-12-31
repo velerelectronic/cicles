@@ -22,5 +22,6 @@
 /Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/css/index.css \
 /Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/img/logo.png \
 /Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/js/calendari.js \
+/Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/js/hammer.js \
 /Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/js/index.js \
 /Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/bin/AndroidManifest.xml \

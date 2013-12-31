@@ -47,7 +47,7 @@ var app = {
         console.log('Received Event: ' + id);
 
 	var nodeApp = document.getElementById('dades');
-	var calendari = new Calendari();
-	calendari.generaMesActual(nodeApp);
+	var calendari = new Calendari(nodeApp);
+	calendari.generaCalendari();
     }
 };
