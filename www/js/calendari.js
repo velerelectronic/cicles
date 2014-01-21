@@ -34,7 +34,12 @@ function Calendari(parentNode) {
 	// Today
 	var date = new Date();
 	var baseNode = document.createElement('div');
+	baseNode.id = 'calendar';
 	parentNode.appendChild(baseNode);
+	var months_list = document.createElement('div');
+	months_list.id = 'cycle-slideshow';
+	months_list.className =  'months-list';
+	baseNode.appendChild(months_list);
 
 	function setHiddenInfo(node,key,value) {
 		node.setAttribute('data-'+key,value);
@@ -87,29 +92,58 @@ function Calendari(parentNode) {
 	};
 
 	this.generaCalendari = function() {
-		generaMesActual(this.date);
+		var heading = document.createElement('h2');
+		baseNode.parentNode.appendChild(heading);
+		heading.appendChild( document.createTextNode(noms_mesos[0] + ' ' + 0) );
+
+		var prevMonth = date;
+		var nextMonth = date;
+		prevMonth.addMonths(-1);
+		generaMesActual(prevMonth.getFullYear(),prevMonth.getMonth(),prevMonth.getDate());
+		generaMesActual(date.getFullYear(),date.getMonth(),date.getDate());
+		nextMonth.addMonths(1);
+		generaMesActual(nextMonth.getFullYear(),nextMonth.getMonth(),nextMonth.getDate());
+
+ 		/* Prev/next controls */
+		var btn = document.createElement('button');
+		btn.id = 'prevMonth';
+		btn.appendChild(document.createTextNode('<'));
+		baseNode.parentNode.appendChild(btn);
+
+		btn = document.createElement('button');
+		btn.appendChild( document.createTextNode('Avui') );
+		btn.onclick = seleccionaDiaAvui;
+		baseNode.parentNode.appendChild(btn);
+
+		btn = document.createElement('button');
+		btn.id = 'nextMonth';
+		btn.appendChild(document.createTextNode('>'));
+		baseNode.parentNode.appendChild(btn);
+
+		$('.months-list').cycle({
+			fx: 'scrollUp',
+			speed: 200,
+			timeout: 0
+		});
+		alert(baseNode.outerHTML);
 	}
 
-	function generaMesActual () {
-		baseNode.innerHTML = '';
-		var y = date.getFullYear(), m = date.getMonth(), d = date.getDate();
-		var heading = document.createElement('h2');
-		baseNode.appendChild(heading);
-		heading.appendChild( document.createTextNode(noms_mesos[m] + ' ' + y) );
-
+	function generaMesActual (y,m,d) {
+		var div = document.createElement('div');
+		div.id = 'month';
 		var taula = document.createElement('table');
 		taula.className = 'calendari';
-		baseNode.appendChild(taula);
-		var button = document.createElement('button');
-		button.appendChild( document.createTextNode('Avui') );
-		baseNode.appendChild(button);
-		button.onclick = seleccionaDiaAvui;
+		//div.appendChild(taula);
+		//months_list.appendChild(div);
+		months_list.appendChild(taula);
 
+/*
 		var hammer = Hammer(taula);
 		hammer.on('swipedown dragdown',mesEnrere);
 		hammer.on('swipeup dragup',mesEnvant);
 		hammer.on('swiperight dragright',anyEnrere);
 		hammer.on('swipeleft dragleft',anyEnvant);
+*/
 
 		var row = document.createElement('tr');
 		taula.appendChild(row);

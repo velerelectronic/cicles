@@ -98,11 +98,17 @@ h2 {
     -webkit-animation:fade 3000ms infinite;
 }
 
+div.month {
+	width: 100%;
+	background-color: rgb(255,255,255);
+}
+
 table.calendari {
-	margin: 3em;
 	border: solid 2pt red;
 	border-collapse: collapse;
-	width: calc(100% - 2 * 3em - 2 * 2pt);
+	width: calc(100% - 2 * 2pt);
+	table-layout: fixed;
+	background-color: #F8E0EC;
 }
 
 .calendari td {
@@ -124,6 +130,15 @@ td.mesdistint {
 td.avui {
 	background-color: yellow;
 
+}
+
+#calendar {
+	margin: 2em;
+	width: calc(100% - 2 * 2em);
+}
+
+#months-list {
+	width: 100%;
 }
 
 

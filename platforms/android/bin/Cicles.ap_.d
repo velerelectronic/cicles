@@ -22,6 +22,12 @@
 /Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/css/index.css \
 /Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/img/logo.png \
 /Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/js/calendari.js \
-/Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/js/hammer.js \
 /Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/js/index.js \
+/Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/js/lib \
+/Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/js/lib/hammer.js \
+/Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/js/lib/jcarousel.min.js \
+/Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/js/lib/jquery-2.0.3.min.js \
+/Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/js/lib/jquery.cycle.all.js \
+/Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/js/lib/jquery.cycle2.js \
+/Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/assets/www/js/lib/jquery.cycle2.scrollVert.min.js \
 /Users/jmpayeras/Desenvolupament/workspace/cicles/platforms/android/bin/AndroidManifest.xml \
