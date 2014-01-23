@@ -11,11 +11,12 @@ function getWeekDayFromMonday(data) {
     return (data.getDay() + 6) % 7;
 }
 
+function addDays(data,days) {
+    data.setDate(data.getDate()+days);
+    return data;
+}
+
 function generaCalendariMensual(modelid,calendariVisual,reset,monthOffset,yearOffset) {
-    function addDays(data,days) {
-        data.setDate(data.getDate()+days);
-        return data;
-    }
 
     function firstDayDate(data) {
         var novadata = new Date(data.getFullYear(),data.getMonth(),1);
@@ -54,7 +55,10 @@ function generaCalendariMensual(modelid,calendariVisual,reset,monthOffset,yearOf
     for (var setmana=0; setmana<6; setmana++) {
         week = new Array();
         for (var weekday=0; weekday<7; weekday++) {
+            var day = firstDay.getDate();
             var month = firstDay.getMonth();
+            var year = firstDay.getFullYear();
+
             var monthType = "",dayType = "";
             if (month == targetMonth) {
                 monthType = 1;
@@ -66,8 +70,7 @@ function generaCalendariMensual(modelid,calendariVisual,reset,monthOffset,yearOf
                 dayType = 'today';
             }
 
-            var day = firstDay.getDate().toString();
-            week.push({'monthType':monthType,'dayType':dayType,'day':day});
+            week.push({'monthType':monthType,'dayType':dayType,'day':day,'month':month,'year':year});
             firstDay = addDays(firstDay,1);
         }
         modelid.append({'days':week});

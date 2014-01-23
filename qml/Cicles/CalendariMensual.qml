@@ -7,6 +7,17 @@ Rectangle {
 
     property int shownMonth: 0
     property int shownYear: 0
+    signal dateSelected (int day,int month, int year)
+
+    function nomDeMes(mes) {
+        var mesos = ['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'];
+        return mesos[mes];
+    }
+
+    function nomDeDiaSetmana(weekday) {
+        var dies = ['diumenge','dilluns','dimarts','dimecres','dijous','divendres','dissabte','diumenge'];
+        return dies[weekday];
+    }
 
     ListModel {
         id: fullMonthModel
@@ -14,10 +25,7 @@ Rectangle {
 
     Text {
         id: shownDate
-        text: {
-            var mesos = ['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'];
-            return mesos[shownMonth] + ' de ' + shownYear.toString()
-        }
+        text: nomDeMes(shownMonth) +  ' de ' + shownYear.toString()
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         color: "black"
@@ -76,6 +84,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.top: calendarHeaders.bottom
         anchors.bottom: controls.top
+        anchors.bottomMargin: 10
         clip: true
 //        anchors.fill: parent
 
@@ -90,9 +99,12 @@ Rectangle {
                     model: days
                     DiaCalendariMensual {
                         width: parent.width / 7
-                        text: day
+                        text: model.day
+                        day: model.day
+                        month: model.month
+                        year: model.year
                         Component.onCompleted: detectType(dayType,monthType)
-                        onTouched: console.log('Ara' + text)
+                        onTouched: calendariMensual.dateSelected(day,month,year)
                     }
                 }
             }
@@ -104,9 +116,9 @@ Rectangle {
 
     Row {
         id: controls
-        height: 50
+        height: 70
         anchors.bottom: parent.bottom
-        anchors.centerIn: parent
+        anchors.horizontalCenter: parent.horizontalCenter
 
         Button {
             text: "<<"

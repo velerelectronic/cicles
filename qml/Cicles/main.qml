@@ -1,5 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
+import "CalendariMensual.js" as CalEngine
+
 
 Rectangle {
     id: mainApp
@@ -25,14 +27,47 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: areaInfo.top
+        onDateSelected: {
+            var data = new Date(year,month,day);
+            areaInfo.text = 'Dia seleccionat: ' + nomDeDiaSetmana(data.getDay()) + ' ' + day + ' de ' + nomDeMes(month) + ' de ' + year + '\n';
+            CalEngine.addDays(data,28);
+            areaInfo.text += 'Proper període: '  + nomDeDiaSetmana(data.getDay()) + ' ' + data.getDate() + ' de ' + nomDeMes(data.getMonth()) + ' de ' + data.getFullYear();
+        }
     }
 
     Rectangle {
+        property alias text: label.text
         id: areaInfo
-        height: 60
+        height: parent.height / 4
         anchors.bottom: parent.bottom
-        width: parent.width
-        color: "#05ff00"
+        anchors.margins: 40
+        anchors.left: parent.left
+        anchors.right: parent.right
+        z: 2
+
+        color: "pink"
+        Text {
+            id: label
+            color: "#000000"
+            anchors.centerIn: parent
+            text: 'Toca un dia del calendari'
+            font.pointSize: 20
+            lineHeight: 2
+            z: 3
+        }
+
     }
+
+    Rectangle {
+        id: shadow
+        color: "#000000"
+        z: 1
+        x: areaInfo.x + 5
+        y: areaInfo.y + 5
+        width: areaInfo.width
+        height: areaInfo.height
+        Component.onCompleted: console.log('Ara' + x + '-' + y)
+    }
+
 
 }

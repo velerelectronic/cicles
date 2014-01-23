@@ -3,6 +3,9 @@ import QtQuick 2.0
 Rectangle {
     id: diaCalendari
     property alias text: contents.text
+    property int day: 0
+    property int month: 0
+    property int year: 0
     signal touched (string text)
 
     width: parent.width
@@ -19,7 +22,7 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: { diaCalendari.touched(text); }
+        onClicked: { diaCalendari.touched(day,month,year); }
     }
 
     function detectType(dayType,monthType) {
