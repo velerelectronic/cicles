@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Controls 1.0
 
 Rectangle {
     id: mainApp
@@ -19,66 +20,9 @@ Rectangle {
         font.family: "Tahoma"
     }
 
-    ListModel {
-        id: fullMonth
-        ListElement {
-            numero: "Dillus"
-            mes: 'Gener'
-            colorCode: "grey"
-        }
-
-        ListElement {
-            name: "Dimarts"
-            colorCode: "red"
-        }
-
-        ListElement {
-            name: "Dimecres"
-            colorCode: "blue"
-        }
-
-        ListElement {
-            name: "Dijous"
-            colorCode: "green"
-        }
-
-        ListElement {
-            name: "Divendres"
-            colorCode: "green"
-        }
-
-        ListElement {
-            name: "Dissabte"
-            colorCode: "green"
-        }
-
-        ListElement {
-            name: "Diumenge"
-            colorCode: "green"
-        }
-    }
-
-    Component {
-        id: weeks
-        Rectangle {
-            color: colorCode
-            anchors.fill: parent
-            Text {
-                text: name
-                font.bold: true
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-        }
-    }
-
-    GridView {
-        id: calendari
+    CalendariMensual {
         anchors.top: title.bottom
-        width: parent.width
         anchors.bottom: parent.bottom
-        cellWidth: width / 7
-        cellHeight: 50
-        model: fullMonth
-        delegate: weeks
+        width: parent.width
     }
 }
