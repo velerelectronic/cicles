@@ -3,8 +3,7 @@ import QtQuick.Controls 1.0
 
 Rectangle {
     id: mainApp
-    width: 768
-    height: 1024
+// No dimensions. The rectangle must be full screen
 
     Text {
         id: title
@@ -22,7 +21,18 @@ Rectangle {
 
     CalendariMensual {
         anchors.top: title.bottom
+        anchors.margins: 20
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: areaInfo.top
+    }
+
+    Rectangle {
+        id: areaInfo
+        height: 60
         anchors.bottom: parent.bottom
         width: parent.width
+        color: "#05ff00"
     }
+
 }

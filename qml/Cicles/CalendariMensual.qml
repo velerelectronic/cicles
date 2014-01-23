@@ -85,7 +85,7 @@ Rectangle {
             Row {
                 anchors.left: parent.left
                 width: parent.width
-                height: 50
+                height: parent.parent.height / 6
                 Repeater {
                     model: days
                     DiaCalendariMensual {
@@ -111,26 +111,32 @@ Rectangle {
         Button {
             text: "<<"
             onClicked: CalendariMensualEngine.generaCalendariMensual(fullMonthModel,calendariMensual,false,0,-1)
+            height: parent.height
         }
 
         Button {
             text: "<"
             onClicked: CalendariMensualEngine.generaCalendariMensual(fullMonthModel,calendariMensual,false,-1,0)
+            height: parent.height
         }
 
         Button {
             text: Qt.formatDateTime(new Date(), "dd/MM/yyyy")
             onClicked: CalendariMensualEngine.generaCalendariMensual(fullMonthModel,calendariMensual,true,0,0)
+            height: parent.height
         }
 
         Button {
             text: ">"
             onClicked: CalendariMensualEngine.generaCalendariMensual(fullMonthModel,calendariMensual,false,1,0)
+            height: parent.height
         }
 
         Button {
             text: ">>"
+            height: parent.height
             onClicked: CalendariMensualEngine.generaCalendariMensual(fullMonthModel,calendariMensual,false,0,1)
         }
     }
+
 }
